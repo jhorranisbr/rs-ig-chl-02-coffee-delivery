@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import imgIntroBackground from '../../assets/intro-background.png'
 
+export const HomeContainer = styled.main``
+
 export const IntroContainer = styled.div`
   width: 100%;
   height: 34rem;
@@ -94,4 +96,24 @@ export const IntroItemIcon = styled.div<IntroItemIconProps>`
 export const IntroCover = styled.img`
   max-width: 100%;
   height: auto;
+`
+
+export const CatalogContainer = styled.div`
+  max-width: 70rem;
+  margin: 3.5rem auto;
+
+  h2 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: ${({ theme }) => theme['base-subtitle']};
+  }
+`
+export const Catalog = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+
+  margin-top: 3.375rem;
 `
