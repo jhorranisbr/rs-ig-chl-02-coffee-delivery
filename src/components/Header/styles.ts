@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const HeaderContainer = styled.div``
+export const HeaderContainer = styled.header``
 
 export const Menu = styled.nav`
   max-width: 70rem;
