@@ -9,7 +9,6 @@ export const IntroContainer = styled.div`
   height: 34rem;
 
   background-image: url(${imgIntroBackground});
-  background-size: cover;
 `
 
 export const IntroContent = styled.div`
