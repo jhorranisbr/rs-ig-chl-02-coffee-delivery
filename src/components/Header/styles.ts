@@ -17,6 +17,22 @@ export const Logotipo = styled.img``
 export const Actions = styled.div`
   display: flex;
   gap: 0.75rem;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.5rem;
+
+    border: none;
+    border-radius: 6px;
+
+    color: ${({ theme }) => theme['yellow-dark']};
+    background: ${({ theme }) => theme['yellow-light']};
+
+    cursor: pointer;
+  }
 `
 
 export const LocationButton = styled.button`
@@ -39,20 +55,4 @@ export const LocationButton = styled.button`
     line-height: 1.3;
     color: ${({ theme }) => theme['purple-dark']};
   }
-`
-
-export const CartButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0.5rem;
-
-  border: none;
-  border-radius: 6px;
-
-  color: ${({ theme }) => theme['yellow-dark']};
-  background: ${({ theme }) => theme['yellow-light']};
-
-  cursor: pointer;
 `

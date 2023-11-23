@@ -19,7 +19,7 @@ import {
 } from './styles'
 
 import { coffeeData } from '../../utils/coffeeData'
-import { CoffeeCard } from '../../components/CoffeeCard'
+import { CoffeeCardCatalog } from '../../components/CoffeeCardCatalog'
 
 export function Home() {
   return (
@@ -79,7 +79,7 @@ export function Home() {
 
         <Catalog>
           {coffeeData.map((coffee) => {
-            return <CoffeeCard key={coffee.id} data={coffee} />
+            return <CoffeeCardCatalog key={coffee.id} data={coffee} />
           })}
         </Catalog>
       </CatalogContainer>

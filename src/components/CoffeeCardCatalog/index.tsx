@@ -17,7 +17,7 @@ interface CoffeCardProps {
   data: Coffee
 }
 
-export function CoffeeCard({
+export function CoffeeCardCatalog({
   data: { name, description, thumbnail, tags, price },
 }: CoffeCardProps) {
   const formattedPrice = new Intl.NumberFormat('pt-BR', {
