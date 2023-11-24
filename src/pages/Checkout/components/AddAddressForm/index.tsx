@@ -1,31 +1,27 @@
-import {
-  FormContainer,
-  BaseInput,
-  FixedInput,
-  RowInput,
-  SmallInput,
-} from './styles'
+import { Input } from '../../../../components/Input'
+
+import { FormContainer, RowInput } from './styles'
 
 export function AddAddressForm() {
   return (
     <FormContainer>
       <RowInput>
-        <SmallInput placeholder="CEP" />
+        <Input sizeMode="small" placeholder="CEP" />
       </RowInput>
 
       <RowInput>
-        <BaseInput placeholder="Rua" />
+        <Input placeholder="Rua" />
       </RowInput>
 
       <RowInput>
-        <FixedInput placeholder="Número" />
-        <BaseInput placeholder="Complemento" />
+        <Input sizeMode="small" placeholder="Número" />
+        <Input placeholder="Complemento" optionalLabel />
       </RowInput>
 
       <RowInput>
-        <SmallInput placeholder="Bairro" />
-        <BaseInput placeholder="Cidade" />
-        <FixedInput placeholder="UF" />
+        <Input sizeMode="small" placeholder="Bairro" />
+        <Input placeholder="Cidade" />
+        <Input sizeMode="fixed" placeholder="UF" />
       </RowInput>
     </FormContainer>
   )
