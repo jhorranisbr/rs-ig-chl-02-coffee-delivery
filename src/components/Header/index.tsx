@@ -10,16 +10,19 @@ import {
   Logotipo,
   Actions,
   LocationButton,
+  Amount,
 } from './styles'
 
 export function Header() {
   return (
     <HeaderContainer>
       <Menu>
-        <Logotipo
-          src={logoCoffeeDelivery}
-          alt="Imagem de um copo à esquerda com a seguinte escrita: Coffee Delivery"
-        />
+        <NavLink to="/">
+          <Logotipo
+            src={logoCoffeeDelivery}
+            alt="Imagem de um copo à esquerda com a seguinte escrita: Coffee Delivery"
+          />
+        </NavLink>
         <Actions>
           <LocationButton>
             <MapPin size={22} weight="fill" /> <span>Porto Alegre, RS</span>
@@ -27,6 +30,7 @@ export function Header() {
 
           <NavLink to="/checkout">
             <ShoppingCart size={18} weight="fill" />
+            <Amount>3</Amount>
           </NavLink>
         </Actions>
       </Menu>

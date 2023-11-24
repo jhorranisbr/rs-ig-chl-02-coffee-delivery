@@ -32,7 +32,37 @@ export const Actions = styled.div`
     background: ${({ theme }) => theme['yellow-light']};
 
     cursor: pointer;
+
+    position: relative;
   }
+`
+
+const sizeContainerOfAmount = '1.25rem'
+
+export const Amount = styled.span`
+  width: ${sizeContainerOfAmount};
+  height: ${sizeContainerOfAmount};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  transform: translate(
+    calc(${sizeContainerOfAmount} / 2),
+    calc((${sizeContainerOfAmount} / 2) * -1)
+  );
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: ${({ theme }) => theme.white};
+
+  border-radius: 100%;
+
+  background: ${({ theme }) => theme['yellow-dark']};
 `
 
 export const LocationButton = styled.button`
