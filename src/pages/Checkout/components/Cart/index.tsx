@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+
+import { CartContext } from '../../../../contexts/CartContext'
+import { CoffeeCardCart } from '../../../../components/CoffeeCardCart'
 import {
   CartContainer,
   CartList,
@@ -5,39 +9,77 @@ import {
   CartFooter,
   Button,
 } from './styles'
-
-import { coffeeData } from '../../../../utils/coffeeData'
-import { CoffeeCardCart } from '../../../../components/CoffeeCardCart'
+import { Coffee } from '../../../../utils/coffeeData'
 
 export function Cart() {
+  const { coffees } = useContext(CartContext)
+
+  const cartNotEmpty = coffees.length > 0
+
+  const totalDelivery = cartNotEmpty ? 350 / 100 : 0
+  const totalAmount = cartNotEmpty ? coffees.reduce(calculateTotalAmount, 0) : 0
+
+  const total = totalAmount + totalDelivery
+
+  const numberFormatOptions = {
+    style: 'decimal',
+    currency: 'BRL',
+
+    minimumFractionDigits: 2,
+  }
+
+  const formattedTotalDelivery = new Intl.NumberFormat(
+    'pt-BR',
+    numberFormatOptions,
+  ).format(totalDelivery)
+
+  const formattedTotalAmount = new Intl.NumberFormat(
+    'pt-BR',
+    numberFormatOptions,
+  ).format(totalAmount)
+
+  const formattedTotal = new Intl.NumberFormat(
+    'pt-BR',
+    numberFormatOptions,
+  ).format(total)
+
+  function calculateTotalAmount(acc: number, coffee: Coffee): number {
+    return (coffee.price / 100) * coffee.amount + acc
+  }
+
   return (
     <CartContainer>
-      <CartList>
-        <CoffeeCardCart data={coffeeData[0]} />
-        <CoffeeCardCart data={coffeeData[1]} />
-      </CartList>
+      {coffees.length > 0 && (
+        <CartList>
+          {coffees.map((coffee) => {
+            return <CoffeeCardCart key={coffee.id} data={coffee} />
+          })}
+        </CartList>
+      )}
 
       <CartFooter>
         <FooterItem>
           <span>Total de itens</span>
-          <div>R$ 27,90</div>
+          <div>R$ {formattedTotalAmount}</div>
         </FooterItem>
 
         <FooterItem>
           <span>Entrega</span>
-          <div>R$ 3,90</div>
+          <div>R$ {formattedTotalDelivery}</div>
         </FooterItem>
 
         <FooterItem>
           <strong>Total</strong>
 
           <div>
-            <strong>R$ 32,90</strong>
+            <strong>R$ {formattedTotal}</strong>
           </div>
         </FooterItem>
       </CartFooter>
 
-      <Button type="submit">Confirmar Pedido</Button>
+      <Button type="submit" disabled={!cartNotEmpty}>
+        Confirmar Pedido
+      </Button>
     </CartContainer>
   )
 }

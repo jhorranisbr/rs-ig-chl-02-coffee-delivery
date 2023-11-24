@@ -1,6 +1,8 @@
 import { Coffee } from '../../utils/coffeeData'
 import { Minus, Plus, ShoppingCartSimple } from '@phosphor-icons/react'
 
+import { produce } from 'immer'
+
 import {
   CoffeeCardContainer,
   Tags,
@@ -12,14 +14,38 @@ import {
   CartButton,
   PriceContainer,
 } from './styles'
+import { useContext, useState } from 'react'
+import { CartContext } from '../../contexts/CartContext'
 
 interface CoffeCardProps {
   data: Coffee
 }
 
-export function CoffeeCardCatalog({
-  data: { name, description, thumbnail, tags, price },
-}: CoffeCardProps) {
+export function CoffeeCardCatalog({ data: coffee }: CoffeCardProps) {
+  const { addCoffeeToCart } = useContext(CartContext)
+
+  const { name, description, thumbnail, tags, price, amount } = coffee
+
+  const [finalAmount, setAmount] = useState(amount)
+
+  function handleAddCoffeeToCart() {
+    const newCoffee: Coffee = produce(coffee, (draft) => {
+      draft.amount = finalAmount
+    })
+
+    addCoffeeToCart(newCoffee)
+  }
+
+  function handleIncrementAmount() {
+    setAmount((state) => state + 1)
+  }
+
+  function handleDecreaseAmount() {
+    setAmount((state) => {
+      return state <= 1 ? 1 : state - 1
+    })
+  }
+
   const formattedPrice = new Intl.NumberFormat('pt-BR', {
     style: 'decimal',
     currency: 'BRL',
@@ -50,18 +76,21 @@ export function CoffeeCardCatalog({
 
         <Actions>
           <Counter>
-            <button title="Diminuir quantidade">
+            <button title="Diminuir quantidade" onClick={handleDecreaseAmount}>
               <Minus size={14} />
             </button>
 
-            <span>10</span>
+            <span>{finalAmount}</span>
 
-            <button title="Aumentar quantidade">
+            <button title="Aumentar quantidade" onClick={handleIncrementAmount}>
               <Plus size={14} />
             </button>
           </Counter>
 
-          <CartButton title="Adicionar ao carrinho">
+          <CartButton
+            title="Adicionar ao carrinho"
+            onClick={handleAddCoffeeToCart}
+          >
             <ShoppingCartSimple size={18} weight="fill" />
           </CartButton>
         </Actions>

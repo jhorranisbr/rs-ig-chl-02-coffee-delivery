@@ -11,14 +11,15 @@ export const CartContainer = styled.section`
   border-bottom-left-radius: 44px !important;
 `
 
+export const CartList = styled.div`
+  margin-bottom: 1.5rem;
+`
+
 export const CartFooter = styled.footer`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-
-  margin-top: 1.5rem;
 `
-export const CartList = styled.div``
 
 export const FooterItem = styled.div`
   display: flex;
@@ -62,7 +63,11 @@ export const Button = styled.button`
 
   background: ${({ theme }) => theme.yellow};
 
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
     background: ${({ theme }) => theme['yellow-dark']};
   }
 `

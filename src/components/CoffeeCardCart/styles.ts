@@ -87,11 +87,12 @@ export const Counter = styled.div`
     }
   }
 
-  span {
+  > span {
     width: 1.25rem;
 
     display: flex;
     align-items: center;
+    justify-content: center;
 
     font-size: 1rem;
     color: ${({ theme }) => theme['base-title']};

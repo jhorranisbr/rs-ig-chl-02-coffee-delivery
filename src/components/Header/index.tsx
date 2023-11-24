@@ -12,8 +12,14 @@ import {
   LocationButton,
   Amount,
 } from './styles'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartContext'
 
 export function Header() {
+  const { coffees } = useContext(CartContext)
+
+  const amount = coffees.length
+
   return (
     <HeaderContainer>
       <Menu>
@@ -30,7 +36,8 @@ export function Header() {
 
           <NavLink to="/checkout">
             <ShoppingCart size={18} weight="fill" />
-            <Amount>3</Amount>
+
+            {amount > 0 && <Amount>{coffees.length}</Amount>}
           </NavLink>
         </Actions>
       </Menu>
