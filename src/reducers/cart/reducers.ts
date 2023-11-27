@@ -3,8 +3,11 @@ import { Coffee } from '../../utils/coffeeData'
 import { produce } from 'immer'
 import { ActionTypes } from './actions'
 
+export type PaymentMethods = 'credit-card' | 'debit-card' | 'money' | 'unset'
+
 interface CartState {
   coffees: Coffee[]
+  paymentMethod: 'credit' | 'debit' | 'money' | 'unset'
 }
 
 export function cartReducer(state: CartState, action: any) {
@@ -66,6 +69,15 @@ export function cartReducer(state: CartState, action: any) {
       return produce(state, (draft) => {
         draft.coffees = newCoffees
       })
+    }
+
+    case ActionTypes.SET_PAYMENT_METHOD: {
+      const paymentMethod = action.payload.paymentMethod
+
+      return {
+        ...state,
+        paymentMethod,
+      }
     }
 
     default:

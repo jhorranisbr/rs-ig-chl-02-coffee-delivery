@@ -1,19 +1,22 @@
 import { ReactNode, createContext, useReducer } from 'react'
 import { Coffee } from '../utils/coffeeData'
-import { cartReducer } from '../reducers/cart/reducers'
+import { PaymentMethods, cartReducer } from '../reducers/cart/reducers'
 import {
   AddCoffeeToCartAction,
   DecreaseCoffeeAmountAction,
   IncreaseCoffeeAmountAction,
   RemoveCoffeeAction,
+  SetPaymentMethod,
 } from '../reducers/cart/actions'
 
 interface CartContextData {
   coffees: Coffee[]
+  paymentMethod: PaymentMethods
   addCoffeeToCart: (data: Coffee) => void
   increaseAmount: (coffeeId: string) => void
   decreaseAmount: (coffeeId: string) => void
   removeCoffee: (coffeeId: string) => void
+  setPaymentMethod: (paymentMethod: PaymentMethods) => void
 }
 
 export const CartContext = createContext({} as CartContextData)
@@ -27,13 +30,14 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     cartReducer,
     {
       coffees: [],
+      paymentMethod: 'unset',
     },
     (initialState) => {
       return initialState
     },
   )
 
-  const { coffees } = coffeesState
+  const { coffees, paymentMethod } = coffeesState
 
   function addCoffeeToCart(coffee: Coffee) {
     dispatch(AddCoffeeToCartAction(coffee))
@@ -51,14 +55,20 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(RemoveCoffeeAction(coffeeId))
   }
 
+  function setPaymentMethod(paymentMethod: PaymentMethods) {
+    dispatch(SetPaymentMethod(paymentMethod))
+  }
+
   return (
     <CartContext.Provider
       value={{
         coffees,
+        paymentMethod,
         addCoffeeToCart,
         increaseAmount,
         decreaseAmount,
         removeCoffee,
+        setPaymentMethod,
       }}
     >
       {children}

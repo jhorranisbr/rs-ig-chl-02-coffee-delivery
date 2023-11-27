@@ -1,10 +1,12 @@
 import { Coffee } from '../../utils/coffeeData'
+import { PaymentMethods } from './reducers'
 
 export enum ActionTypes {
   ADD_NEW_COFFEE = 'ADD_NEW_COFFEE',
   INCREASE_COFFEE_AMOUNT = 'INCREASE_COFFEE_AMOUNT',
   DECREASE_COFFEE_AMOUNT = 'DECREASE_COFFEE_AMOUNT',
   REMOVE_COFFEE = 'REMOVE_COFFEE',
+  SET_PAYMENT_METHOD = 'SET_PAYMENT_METHOD',
 }
 
 export function AddCoffeeToCartAction(newCoffee: Coffee) {
@@ -39,6 +41,15 @@ export function RemoveCoffeeAction(coffeeId: string) {
     type: ActionTypes.REMOVE_COFFEE,
     payload: {
       coffeeId,
+    },
+  }
+}
+
+export function SetPaymentMethod(paymentMethod: PaymentMethods) {
+  return {
+    type: ActionTypes.SET_PAYMENT_METHOD,
+    payload: {
+      paymentMethod,
     },
   }
 }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const PaymentMethodFormContainer = styled.div`
   display: flex;
@@ -6,7 +6,11 @@ export const PaymentMethodFormContainer = styled.div`
   gap: 0.75rem;
 `
 
-export const Select = styled.button`
+interface SelectProps {
+  isSelected: boolean
+}
+
+export const Select = styled.button<SelectProps>`
   display: flex;
   align-items: center;
   flex: 1;
@@ -44,4 +48,13 @@ export const Select = styled.button`
 
     box-shadow: 0 0 0 2px ${({ theme }) => theme.purple};
   }
+
+  ${(props) =>
+    props.isSelected &&
+    css`
+      background: ${({ theme }) => theme['purple-light']};
+      border-color: ${({ theme }) => theme.purple};
+
+      box-shadow: 0 0 0 2px ${({ theme }) => theme.purple};
+    `}
 `
