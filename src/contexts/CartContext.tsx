@@ -1,12 +1,12 @@
 import { ReactNode, createContext, useReducer } from 'react'
 import { Coffee } from '../utils/coffeeData'
-import { coffeesReducer } from '../reducers/coffees/reducers'
+import { cartReducer } from '../reducers/cart/reducers'
 import {
   AddCoffeeToCartAction,
   DecreaseCoffeeAmountAction,
   IncreaseCoffeeAmountAction,
   RemoveCoffeeAction,
-} from '../reducers/coffees/actions'
+} from '../reducers/cart/actions'
 
 interface CartContextData {
   coffees: Coffee[]
@@ -24,7 +24,7 @@ interface CartContextProviderProps {
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [coffeesState, dispatch] = useReducer(
-    coffeesReducer,
+    cartReducer,
     {
       coffees: [],
     },

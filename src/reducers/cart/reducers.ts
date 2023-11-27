@@ -3,11 +3,11 @@ import { Coffee } from '../../utils/coffeeData'
 import { produce } from 'immer'
 import { ActionTypes } from './actions'
 
-interface CoffeesState {
+interface CartState {
   coffees: Coffee[]
 }
 
-export function coffeesReducer(state: CoffeesState, action: any) {
+export function cartReducer(state: CartState, action: any) {
   switch (action.type) {
     case ActionTypes.ADD_NEW_COFFEE: {
       const currentCoffeeIndex = state.coffees.findIndex((coffee) => {
