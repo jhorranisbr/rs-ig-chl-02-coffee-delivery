@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import zod from 'zod'
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/CartContext'
+import { useNavigate } from 'react-router-dom'
 
 const addAddressScheme = zod.object({
   zipCode: zod.string(),
@@ -28,6 +29,8 @@ const addAddressScheme = zod.object({
 type AddAddressFormData = zod.infer<typeof addAddressScheme>
 
 export function Checkout() {
+  const navigate = useNavigate()
+
   const { checkout } = useContext(CartContext)
 
   const addAddressForm = useForm<AddAddressFormData>({
@@ -47,6 +50,8 @@ export function Checkout() {
 
   function handleNewOrder() {
     checkout()
+
+    navigate('/success', { replace: true })
   }
 
   return (
