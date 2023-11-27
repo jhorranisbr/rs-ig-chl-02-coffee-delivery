@@ -3,11 +3,23 @@ import { Coffee } from '../../utils/coffeeData'
 import { produce } from 'immer'
 import { ActionTypes } from './actions'
 
-export type PaymentMethods = 'credit-card' | 'debit-card' | 'money' | 'unset'
+export type PaymentMethods = 'credit-card' | 'debit-card' | 'cash'
+
+export interface Address {
+  zipCode: string
+  street: string
+  complement?: string
+  number: string
+  district: string
+  city: string
+  region: string
+}
 
 interface CartState {
   coffees: Coffee[]
-  paymentMethod: 'credit' | 'debit' | 'money' | 'unset'
+  paymentMethod: 'credit' | 'debit' | 'cash'
+  delivery?: Address
+  fee?: number
 }
 
 export function cartReducer(state: CartState, action: any) {
@@ -77,6 +89,13 @@ export function cartReducer(state: CartState, action: any) {
       return {
         ...state,
         paymentMethod,
+      }
+    }
+
+    case ActionTypes.ADD_ADDRESS_TO_DELIVERY: {
+      return {
+        ...state,
+        delivery: action.payload.address,
       }
     }
 

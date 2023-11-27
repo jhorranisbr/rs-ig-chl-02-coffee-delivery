@@ -56,3 +56,15 @@ export const BaseInput = styled.input`
     border-color: ${({ theme }) => theme['yellow-dark']};
   }
 `
+
+export const ErrorMessage = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 400;
+  color: red;
+
+  /* position: absolute;
+  bottom: -2.5ex;
+  left: 0; */
+`

@@ -1,6 +1,6 @@
 import { Bank, CreditCard, Money } from '@phosphor-icons/react'
 import { PaymentMethodFormContainer, Select } from './styles'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { CartContext } from '../../../../contexts/CartContext'
 import { PaymentMethods } from '../../../../reducers/cart/reducers'
 
@@ -19,7 +19,7 @@ export function PaymentMethodForm() {
     <PaymentMethodFormContainer>
       <Select
         type="button"
-        isSelected={isPaymentMethodSelected('credit-card')}
+        $isSelected={isPaymentMethodSelected('credit-card')}
         onClick={() => handleSetPaymentMethod('credit-card')}
       >
         <CreditCard size={16} />
@@ -28,7 +28,7 @@ export function PaymentMethodForm() {
 
       <Select
         type="button"
-        isSelected={isPaymentMethodSelected('debit-card')}
+        $isSelected={isPaymentMethodSelected('debit-card')}
         onClick={() => handleSetPaymentMethod('debit-card')}
       >
         <Bank size={16} />
@@ -37,8 +37,8 @@ export function PaymentMethodForm() {
 
       <Select
         type="button"
-        isSelected={isPaymentMethodSelected('money')}
-        onClick={() => handleSetPaymentMethod('money')}
+        $isSelected={isPaymentMethodSelected('cash')}
+        onClick={() => handleSetPaymentMethod('cash')}
       >
         <Money size={16} />
         <span>Dinheiro</span>

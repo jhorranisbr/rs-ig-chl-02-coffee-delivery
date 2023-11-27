@@ -7,7 +7,7 @@ export const PaymentMethodFormContainer = styled.div`
 `
 
 interface SelectProps {
-  isSelected: boolean
+  $isSelected: boolean
 }
 
 export const Select = styled.button<SelectProps>`
@@ -50,7 +50,7 @@ export const Select = styled.button<SelectProps>`
   }
 
   ${(props) =>
-    props.isSelected &&
+    props.$isSelected &&
     css`
       background: ${({ theme }) => theme['purple-light']};
       border-color: ${({ theme }) => theme.purple};

@@ -1,12 +1,16 @@
 import { ReactNode, createContext, useReducer } from 'react'
 import { Coffee } from '../utils/coffeeData'
-import { PaymentMethods, cartReducer } from '../reducers/cart/reducers'
+import { Address, PaymentMethods, cartReducer } from '../reducers/cart/reducers'
+
+import { v4 as uuidv4 } from 'uuid'
+
 import {
+  AddAddressToDeliveryAction,
   AddCoffeeToCartAction,
   DecreaseCoffeeAmountAction,
   IncreaseCoffeeAmountAction,
   RemoveCoffeeAction,
-  SetPaymentMethod,
+  SetPaymentMethodAction,
 } from '../reducers/cart/actions'
 
 interface CartContextData {
@@ -17,6 +21,8 @@ interface CartContextData {
   decreaseAmount: (coffeeId: string) => void
   removeCoffee: (coffeeId: string) => void
   setPaymentMethod: (paymentMethod: PaymentMethods) => void
+  addAddressToDelivery: (address: Address) => void
+  checkout: () => void
 }
 
 export const CartContext = createContext({} as CartContextData)
@@ -25,19 +31,21 @@ interface CartContextProviderProps {
   children: ReactNode
 }
 
+const LOCAL_STORAGE_KEY = '@rs-ig-chl-02-coffee-delivery:orders-1.0.0'
+
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [coffeesState, dispatch] = useReducer(
     cartReducer,
     {
       coffees: [],
-      paymentMethod: 'unset',
+      paymentMethod: 'credit-card',
     },
     (initialState) => {
       return initialState
     },
   )
 
-  const { coffees, paymentMethod } = coffeesState
+  const { coffees, paymentMethod, delivery } = coffeesState
 
   function addCoffeeToCart(coffee: Coffee) {
     dispatch(AddCoffeeToCartAction(coffee))
@@ -56,7 +64,43 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function setPaymentMethod(paymentMethod: PaymentMethods) {
-    dispatch(SetPaymentMethod(paymentMethod))
+    dispatch(SetPaymentMethodAction(paymentMethod))
+  }
+
+  function addAddressToDelivery(address: Address) {
+    dispatch(AddAddressToDeliveryAction(address))
+  }
+
+  function checkout() {
+    const items = coffees.map((coffee) => {
+      return {
+        id: coffee.id,
+        amount: coffee.amount,
+      }
+    })
+
+    const order = {
+      id: uuidv4(),
+      date: new Date(),
+      items,
+      delivery,
+      paymentMethod,
+    }
+
+    const storageOrders = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    let orders = []
+
+    if (storageOrders) {
+      orders = JSON.parse(storageOrders)
+    }
+
+    orders.push(order)
+
+    localStorage.setItem(
+      '@rs-ig-chl-02-coffee-delivery:orders-1.0.0',
+      JSON.stringify(orders),
+    )
   }
 
   return (
@@ -69,6 +113,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         decreaseAmount,
         removeCoffee,
         setPaymentMethod,
+        addAddressToDelivery,
+        checkout,
       }}
     >
       {children}

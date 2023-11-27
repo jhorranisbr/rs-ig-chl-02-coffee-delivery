@@ -1,27 +1,72 @@
+import { useContext } from 'react'
+
+import { useFormContext } from 'react-hook-form'
+
 import { Input } from '../../../../components/Input'
 
 import { FormContainer, RowInput } from './styles'
+import { Address } from '../../../../reducers/cart/reducers'
+import { CartContext } from '../../../../contexts/CartContext'
 
 export function AddAddressForm() {
+  const { register, getValues } = useFormContext()
+  const { addAddressToDelivery } = useContext(CartContext)
+
+  function handleFetchAddress() {
+    const addressToDeliveryData: Address = getValues() as Address
+
+    addAddressToDelivery(addressToDeliveryData)
+  }
+
   return (
     <FormContainer>
       <RowInput>
-        <Input sizeMode="small" placeholder="CEP" />
+        <Input
+          sizeMode="small"
+          placeholder="CEP"
+          required
+          registerName="zipCode"
+          register={register}
+        />
+
+        <button type="button" onClick={handleFetchAddress}>
+          Buscar CEP
+        </button>
       </RowInput>
 
       <RowInput>
-        <Input placeholder="Rua" />
+        <Input placeholder="Rua" registerName="street" register={register} />
       </RowInput>
 
       <RowInput>
-        <Input sizeMode="small" placeholder="Número" />
-        <Input placeholder="Complemento" optionalLabel />
+        <Input
+          sizeMode="small"
+          placeholder="Número"
+          registerName="number"
+          register={register}
+        />
+        <Input
+          placeholder="Complemento"
+          optionalLabel
+          registerName="complement"
+          register={register}
+        />
       </RowInput>
 
       <RowInput>
-        <Input sizeMode="small" placeholder="Bairro" />
-        <Input placeholder="Cidade" />
-        <Input sizeMode="fixed" placeholder="UF" />
+        <Input
+          sizeMode="small"
+          placeholder="Bairro"
+          registerName="district"
+          register={register}
+        />
+        <Input placeholder="Cidade" registerName="city" register={register} />
+        <Input
+          sizeMode="fixed"
+          placeholder="UF"
+          registerName="region"
+          register={register}
+        />
       </RowInput>
     </FormContainer>
   )
