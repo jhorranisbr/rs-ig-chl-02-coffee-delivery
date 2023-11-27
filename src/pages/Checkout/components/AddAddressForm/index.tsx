@@ -7,6 +7,7 @@ import { Input } from '../../../../components/Input'
 import { FormContainer, RowInput } from './styles'
 import { Address } from '../../../../reducers/cart/reducers'
 import { CartContext } from '../../../../contexts/CartContext'
+import { Button } from '../../../../components/Button'
 
 export function AddAddressForm() {
   const { register, getValues } = useFormContext()
@@ -29,9 +30,9 @@ export function AddAddressForm() {
           register={register}
         />
 
-        <button type="button" onClick={handleFetchAddress}>
+        <Button type="button" onClick={handleFetchAddress}>
           Buscar CEP
-        </button>
+        </Button>
       </RowInput>
 
       <RowInput>

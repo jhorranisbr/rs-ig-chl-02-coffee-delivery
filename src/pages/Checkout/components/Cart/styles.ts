@@ -19,6 +19,8 @@ export const CartFooter = styled.footer`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  margin-bottom: 1.5rem;
 `
 
 export const FooterItem = styled.div`
@@ -38,36 +40,5 @@ export const FooterItem = styled.div`
   strong {
     font-size: 1.25rem;
     color: ${({ theme }) => theme['base-subtitle']};
-  }
-`
-
-export const Button = styled.button`
-  width: 100%;
-
-  padding: 0.75rem 0.5rem;
-  margin-top: 1.5rem;
-
-  font-size: 0.875rem;
-  font-weight: bold;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.white};
-  text-align: center;
-  text-transform: uppercase;
-
-  border-radius: 6px;
-  border: none;
-
-  cursor: pointer;
-
-  transition: background 0.1s;
-
-  background: ${({ theme }) => theme.yellow};
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &:not(:disabled):hover {
-    background: ${({ theme }) => theme['yellow-dark']};
   }
 `

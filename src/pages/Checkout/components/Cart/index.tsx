@@ -2,14 +2,9 @@ import { useContext } from 'react'
 
 import { CartContext } from '../../../../contexts/CartContext'
 import { CoffeeCardCart } from '../../../../components/CoffeeCardCart'
-import {
-  CartContainer,
-  CartList,
-  FooterItem,
-  CartFooter,
-  Button,
-} from './styles'
+import { CartContainer, CartList, FooterItem, CartFooter } from './styles'
 import { Coffee } from '../../../../utils/coffeeData'
+import { Button } from '../../../../components/Button'
 
 export function Cart() {
   const { coffees } = useContext(CartContext)
