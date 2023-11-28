@@ -20,6 +20,7 @@ import {
 interface CartContextData {
   coffees: Coffee[]
   paymentMethod: PaymentMethods
+  orders: Order[]
   addCoffeeToCart: (data: Coffee) => void
   increaseAmount: (coffeeId: string) => void
   decreaseAmount: (coffeeId: string) => void
@@ -98,6 +99,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       value={{
         coffees,
         paymentMethod,
+        orders,
         addCoffeeToCart,
         increaseAmount,
         decreaseAmount,

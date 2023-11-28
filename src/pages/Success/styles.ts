@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components'
 export const SuccessContainer = styled.main`
   max-width: 70rem;
   margin: 0 auto;
+
+  padding: 5rem 0;
 `
 
 export const Title = styled.h2`
@@ -74,6 +76,10 @@ export const Info = styled.div<InfoProps>`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+
+  p {
+    flex: 1;
+  }
 
   span {
     width: 2rem;

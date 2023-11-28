@@ -1,3 +1,8 @@
+import { useContext } from 'react'
+import { useParams } from 'react-router-dom'
+
+import { CartContext } from '../../contexts/CartContext'
+
 import { CurrencyDollar, MapPin, Timer } from '@phosphor-icons/react'
 
 import successCover from '../../assets/success-cover.svg'
@@ -12,7 +17,34 @@ import {
   Info,
 } from './styles'
 
+const PAYMENT_METHODS = {
+  'credit-card': 'Cartão de Crédito',
+  'debit-card': 'Cartão de Débito',
+  cash: 'Dinheiro',
+}
+
 export function Success() {
+  const { orders } = useContext(CartContext)
+  const { orderId } = useParams()
+
+  const order = orders.find((order) => order.id === orderId)
+
+  let deliveryTop = ''
+  let deliveryBottom = ''
+  let paymentMethod = ''
+
+  if (order) {
+    deliveryTop = `${order?.delivery.street}, ${order?.delivery.number}`
+
+    if (order.delivery.complement) {
+      deliveryTop = String(deliveryTop).concat(', ', order.delivery.complement)
+    }
+
+    deliveryBottom = `${order?.delivery.district} - ${order?.delivery.city}, ${order?.delivery.region}`
+
+    paymentMethod = PAYMENT_METHODS[order.paymentMethod]
+  }
+
   return (
     <SuccessContainer>
       <Title>Uhu! Pedido confirmado</Title>
@@ -25,21 +57,28 @@ export function Success() {
               <span>
                 <MapPin weight="fill" size={16} />
               </span>
-              <p>Entrega em </p>
+              <p>
+                Entrega em <strong>{deliveryTop}</strong> <br />
+                {deliveryBottom}
+              </p>
             </Info>
 
             <Info $color="yellow">
               <span>
                 <Timer weight="fill" size={16} />
               </span>
-              <p>Previsão de entrega </p>
+              <p>
+                Previsão de entrega <br /> <strong>20min - 30min</strong>{' '}
+              </p>
             </Info>
 
             <Info $color="yellowDark">
               <span>
                 <CurrencyDollar size={16} />
               </span>
-              <p>Previsão de entrega </p>
+              <p>
+                Pagamento na entrega <br /> <strong>{paymentMethod}</strong>
+              </p>
             </Info>
           </InfoWrapper>
         </InfoContainer>

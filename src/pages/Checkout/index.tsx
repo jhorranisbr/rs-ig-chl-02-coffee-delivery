@@ -69,7 +69,7 @@ export function Checkout() {
 
     checkout(order)
 
-    navigate('/success', { replace: true })
+    navigate(`/order/${order.id}/success`, { replace: true })
   }
 
   return (
