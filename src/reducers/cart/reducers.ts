@@ -15,11 +15,23 @@ export interface Address {
   region: string
 }
 
+export interface Order {
+  id: string
+  date: Date
+  items: Array<{
+    id: string
+    amount: number
+  }>
+  delivery: Address
+  paymentMethod: PaymentMethods
+}
+
 interface CartState {
   coffees: Coffee[]
   paymentMethod: 'credit' | 'debit' | 'cash'
   delivery?: Address
   fee?: number
+  orders: Order[]
 }
 
 export function cartReducer(state: CartState, action: any) {
@@ -92,11 +104,21 @@ export function cartReducer(state: CartState, action: any) {
       }
     }
 
+    /** remove this function */
     case ActionTypes.ADD_ADDRESS_TO_DELIVERY: {
       return {
         ...state,
         delivery: action.payload.address,
       }
+    }
+
+    case ActionTypes.CHECKOUT: {
+      const order = action.payload.order
+
+      return produce(state, (draft) => {
+        draft.orders.push(order)
+        draft.coffees = []
+      })
     }
 
     default:

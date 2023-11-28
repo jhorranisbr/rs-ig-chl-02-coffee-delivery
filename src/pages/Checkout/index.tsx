@@ -15,6 +15,9 @@ import zod from 'zod'
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/CartContext'
 import { useNavigate } from 'react-router-dom'
+import { Order } from '../../reducers/cart/reducers'
+
+import { v4 as uuidv4 } from 'uuid'
 
 const addAddressScheme = zod.object({
   zipCode: zod.string(),
@@ -31,7 +34,7 @@ type AddAddressFormData = zod.infer<typeof addAddressScheme>
 export function Checkout() {
   const navigate = useNavigate()
 
-  const { checkout } = useContext(CartContext)
+  const { checkout, coffees, paymentMethod } = useContext(CartContext)
 
   const addAddressForm = useForm<AddAddressFormData>({
     resolver: zodResolver(addAddressScheme),
@@ -48,8 +51,23 @@ export function Checkout() {
 
   const { handleSubmit } = addAddressForm
 
-  function handleNewOrder() {
-    checkout()
+  function handleNewOrder(data: AddAddressFormData) {
+    const items = coffees.map((coffee) => {
+      return {
+        id: coffee.id,
+        amount: coffee.amount,
+      }
+    })
+
+    const order: Order = {
+      id: uuidv4(),
+      date: new Date(),
+      delivery: data,
+      items,
+      paymentMethod,
+    }
+
+    checkout(order)
 
     navigate('/success', { replace: true })
   }

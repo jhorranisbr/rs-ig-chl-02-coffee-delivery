@@ -1,12 +1,16 @@
-import { ReactNode, createContext, useReducer } from 'react'
+import { ReactNode, createContext, useEffect, useReducer } from 'react'
 import { Coffee } from '../utils/coffeeData'
-import { Address, PaymentMethods, cartReducer } from '../reducers/cart/reducers'
-
-import { v4 as uuidv4 } from 'uuid'
+import {
+  Address,
+  Order,
+  PaymentMethods,
+  cartReducer,
+} from '../reducers/cart/reducers'
 
 import {
   AddAddressToDeliveryAction,
   AddCoffeeToCartAction,
+  CheckoutAction,
   DecreaseCoffeeAmountAction,
   IncreaseCoffeeAmountAction,
   RemoveCoffeeAction,
@@ -22,7 +26,7 @@ interface CartContextData {
   removeCoffee: (coffeeId: string) => void
   setPaymentMethod: (paymentMethod: PaymentMethods) => void
   addAddressToDelivery: (address: Address) => void
-  checkout: () => void
+  checkout: (data: Order) => void
 }
 
 export const CartContext = createContext({} as CartContextData)
@@ -39,13 +43,27 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     {
       coffees: [],
       paymentMethod: 'credit-card',
+      orders: [],
     },
-    (initialState) => {
-      return initialState
+    (cartState) => {
+      const storagedOrders = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+      if (storagedOrders) {
+        return {
+          ...cartState,
+          orders: JSON.parse(storagedOrders),
+        }
+      }
+
+      return cartState
     },
   )
 
-  const { coffees, paymentMethod, delivery } = coffeesState
+  const { coffees, paymentMethod, orders } = coffeesState
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(orders))
+  }, [orders])
 
   function addCoffeeToCart(coffee: Coffee) {
     dispatch(AddCoffeeToCartAction(coffee))
@@ -71,36 +89,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     dispatch(AddAddressToDeliveryAction(address))
   }
 
-  function checkout() {
-    const items = coffees.map((coffee) => {
-      return {
-        id: coffee.id,
-        amount: coffee.amount,
-      }
-    })
-
-    const order = {
-      id: uuidv4(),
-      date: new Date(),
-      items,
-      delivery,
-      paymentMethod,
-    }
-
-    const storageOrders = localStorage.getItem(LOCAL_STORAGE_KEY)
-
-    let orders = []
-
-    if (storageOrders) {
-      orders = JSON.parse(storageOrders)
-    }
-
-    orders.push(order)
-
-    localStorage.setItem(
-      '@rs-ig-chl-02-coffee-delivery:orders-1.0.0',
-      JSON.stringify(orders),
-    )
+  function checkout(order: Order) {
+    dispatch(CheckoutAction(order))
   }
 
   return (
