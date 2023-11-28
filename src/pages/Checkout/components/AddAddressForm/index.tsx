@@ -1,22 +1,40 @@
-import { useContext } from 'react'
+import { useState } from 'react'
 
 import { useFormContext } from 'react-hook-form'
 
+import { CircleDashed } from '@phosphor-icons/react'
 import { Input } from '../../../../components/Input'
 
-import { FormContainer, RowInput } from './styles'
-import { Address } from '../../../../reducers/cart/reducers'
-import { CartContext } from '../../../../contexts/CartContext'
-import { Button } from '../../../../components/Button'
+import { FormContainer, RowInput, SearchButton } from './styles'
 
 export function AddAddressForm() {
-  const { register, getValues } = useFormContext()
-  const { addAddressToDelivery } = useContext(CartContext)
+  const { register, getValues, setValue } = useFormContext()
+  const [isFetching, setIsFetching] = useState(false)
 
-  function handleFetchAddress() {
-    const addressToDeliveryData: Address = getValues() as Address
+  async function handleFetchAddress() {
+    setIsFetching(true)
 
-    addAddressToDelivery(addressToDeliveryData)
+    const regexNotNumbers = /\D/
+
+    const zipCodeOnlyNumbers = String(getValues('zipCode')).replace(
+      regexNotNumbers,
+      '',
+    )
+
+    const fetchedAddress = await fetch(
+      `https://viacep.com.br/ws/${zipCodeOnlyNumbers}/json/`,
+    )
+
+    const addressJSON = await fetchedAddress.json().finally(() => {
+      setIsFetching(false)
+    })
+
+    if (addressJSON) {
+      setValue('street', addressJSON.logradouro)
+      setValue('district', addressJSON.bairro)
+      setValue('city', addressJSON.localidade)
+      setValue('region', addressJSON.uf)
+    }
   }
 
   return (
@@ -30,9 +48,14 @@ export function AddAddressForm() {
           register={register}
         />
 
-        <Button type="button" onClick={handleFetchAddress}>
+        <SearchButton type="button" onClick={handleFetchAddress}>
           Buscar CEP
-        </Button>
+          {isFetching && (
+            <span>
+              <CircleDashed size={24} />
+            </span>
+          )}
+        </SearchButton>
       </RowInput>
 
       <RowInput>

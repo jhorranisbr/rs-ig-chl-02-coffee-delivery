@@ -28,3 +28,33 @@ export const RowInput = styled.div`
     margin-top: 1rem;
   }
 `
+
+export const SearchButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.yellow};
+
+  padding: 0.75rem 0.5rem;
+
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  transition: color 0.1s;
+
+  &:hover {
+    color: ${({ theme }) => theme['yellow-dark']};
+  }
+
+  > span {
+    animation: spin 1s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`
