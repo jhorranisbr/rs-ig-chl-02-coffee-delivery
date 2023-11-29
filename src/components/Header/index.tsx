@@ -12,13 +12,25 @@ import {
   LocationButton,
   Amount,
 } from './styles'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../../contexts/CartContext'
 
 export function Header() {
-  const { coffees } = useContext(CartContext)
+  const { coffees, orders } = useContext(CartContext)
+
+  const [addressString, setAddressString] = useState('Sem Localização')
 
   const amount = coffees.length
+
+  useEffect(() => {
+    if (orders.length > 0) {
+      const lastOrder = orders[orders.length - 1]
+
+      setAddressString(
+        `${lastOrder.delivery.city}, ${lastOrder.delivery.region}`,
+      )
+    }
+  }, [orders])
 
   return (
     <HeaderContainer>
@@ -31,7 +43,7 @@ export function Header() {
         </NavLink>
         <Actions>
           <LocationButton>
-            <MapPin size={22} weight="fill" /> <span>Porto Alegre, RS</span>
+            <MapPin size={22} weight="fill" /> <span>{addressString}</span>
           </LocationButton>
 
           <NavLink to="/checkout">
