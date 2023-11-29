@@ -1,30 +1,39 @@
-# React + TypeScript + Vite
+# Ignite - Coffee Delivery - A Rocketseat Challenge. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a challenge number 02 from Ignite Course, in ReactJS trail
 
-Currently, two official plugins are available:
+![Logo Coffee Delivery](https://github.com/jhorranisbr/rs-ig-chl-02-coffee-delivery/blob/main/src/assets/logo-coffee-delivery.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About Challenge
 
-## Expanding the ESLint configuration
+In this challenge, i needed develop an application to manage a cart to a fake coffee shop with functionalities:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- List Coffes to buy
+- Add amount of coffees to cart
+- Increment and Decrease amount in cart
+- Form to user fill address
+- Show total items of cart in Header Component
+- Show total price of items in cart
 
-- Configure the top-level `parserOptions` property like this:
+Important concepts
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- States
+- ContextAPI
+- LocalStorage
+- Immutable State
+- Lists and Keys
+- Properties
+- Components
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Some things i tested beyond the challenge
+
+- Github CLI
+- Conventional Commits
+- .DotEnv
+- Fecth Api
+
+## How to run
+
+After clone repo, in you terminal run `npm i` to install dependencies and `npm run dev` to start Project.
+Check the terminal to see a url running project.
+  
